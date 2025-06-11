@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Account</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
+    <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Create Account</h2>
+    <form id="signupForm" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="fullName">Full Name</label>
+        <input type="text" id="fullName" name="fullName" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Email</label>
+        <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="password">Password</label>
+        <input type="password" id="password" name="password" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1" for="phone">Phone</label>
+        <input type="tel" id="phone" name="phone" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring focus:ring-blue-300" />
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200">Sign Up</button>
+    </form>
+    <div class="flex items-center justify-center my-4">
+  <span class="text-gray-400 text-sm">OR</span>
+</div>
+
+<button
+  
+  onclick="signInWithGoogle()"
+  class="w-full bg-white border border-gray-300 text-gray-700 font-medium py-2 rounded-lg flex items-center justify-center hover:bg-gray-50 transition duration-200"
+>
+  <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5 mr-2" />
+  Sign up with Google
+</button>
+
+  </div>
+
+  <script>
+
+    function signInWithGoogle() {
+    // This should redirect to your Google OAuth backend endpoint
+    window.location.href = "http://localhost:5000/auth/google";
+  }
+  document.getElementById('signupForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    
+
+    const userData = {
+      fullName: e.target.fullName.value,
+      email: e.target.email.value,
+      password: e.target.password.value,
+      phone: e.target.phone.value,
+    };
+
+    try {
+      const response = await fetch('http://localhost:5000/api/createUser', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(userData),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        alert('Account created successfully!');
+        console.log(result); // success data
+      } else {
+        alert('Error: ' + result.message || 'Something went wrong');
+        console.error(result); // error details
+      }
+    } catch (error) {
+      alert('Network error. Please try again later.');
+      console.error('Fetch error:', error);
+    }
+  });
+</script>
+</body>
+</html>

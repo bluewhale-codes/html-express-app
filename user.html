@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Card from LocalStorage</title>
+  <style>
+    body {
+      background-color: #eef1f5;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .user-card {
+      background-color: #ffffff;
+      width: 350px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .user-card img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #007bff;
+      margin-bottom: 15px;
+    }
+
+    .user-card h2 {
+      margin: 10px 0 5px;
+      font-size: 22px;
+      color: #333;
+    }
+
+    .user-card p {
+      margin: 4px 0;
+      color: #555;
+      font-size: 16px;
+    }
+
+    .user-card .email {
+      color: #007bff;
+    }
+
+    .user-card .phone {
+      color: #28a745;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="user-card">
+    <img id="user-image" src="https://cdn.pixabay.com/photo/2018/05/12/18/32/pets-3394239_1280.jpg" alt="User Image">
+    <h2 id="user-name">Name</h2>
+    <p class="email" id="user-email">Email</p>
+    <p class="phone" id="user-phone">Phone</p>
+  </div>
+
+  <script>
+    // Sample user data — only needed if localStorage is empty
+    const defaultUser = {
+      name: "John Doe",
+      email: "johndoe@example.com",
+      phone: "+1 234 567 890",
+      image: "https://via.placeholder.com/120"
+    };
+
+    // Save to localStorage only if not already saved
+    if (!localStorage.getItem("user")) {
+      localStorage.setItem("user", JSON.stringify(defaultUser));
+    }
+
+    // Retrieve and parse user data
+    const userData = JSON.parse(localStorage.getItem("user"));
+
+    // Populate card with data
+    document.getElementById("user-name").textContent = userData.user.fullName;
+    document.getElementById("user-email").textContent = userData.user.email;
+    document.getElementById("user-phone").textContent = userData.user.phone;
+    
+  </script>
+
+</body>
+</html>
