@@ -66,6 +66,7 @@
     };
 
     try {
+      console.log("hello");
       const response = await fetch('http://localhost:5000/api/createUser', {
         method: 'POST',
         credentials: 'include',
@@ -74,6 +75,7 @@
         },
         body: JSON.stringify(userData),
       });
+      console.log("world");
 
       const result = await response.json();
 
